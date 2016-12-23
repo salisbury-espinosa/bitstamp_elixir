@@ -3,6 +3,18 @@ defmodule Bitstamp.Api do
   def eur_usd do
     get_from_api "eur_usd"
   end
+  
+  def transactions do
+    get_from_api "transactions"
+  end
+
+  def transactions_usd do
+    get_from_api "v2/transactions/btcusd"
+  end
+
+  def transactions_eur do
+    get_from_api "v2/transactions/btceur"
+  end
 
   def ticker do
     get_from_api "ticker"
