@@ -16,8 +16,8 @@ defmodule Bitstamp.Api.Transport do
     GenServer.start_link(__MODULE__, :ok, opts)
   end
 
-  def get(path) do
-    GenServer.call(__MODULE__, {:get, path}, :infinity)
+  def get(path, params) do
+    GenServer.call(__MODULE__, {:get, path, params}, :infinity)
   end
 
   def post(method, params) do
@@ -47,9 +47,9 @@ defmodule Bitstamp.Api.Transport do
     end
   end
 
-  def handle_call({:get, path}, _from, state) do
+  def handle_call({:get, path, params}, _from, state) do
     url = @base_url <> path <> "/"
-    case HTTPoison.get(url) do
+    case HTTPoison.get(url, [], [params: params]) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}} ->
         reply = parse_res(body, headers)
         {:reply, reply, state}
