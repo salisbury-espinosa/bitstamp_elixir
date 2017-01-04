@@ -4,6 +4,18 @@ defmodule Bitstamp.Api do
     get_from_api "eur_usd"
   end
 
+  def transactions do
+    get_from_api "transactions"
+  end
+
+  def transactions_usd(time \\ "hour") do
+    get_from_api "v2/transactions/btcusd", %{time: time}
+  end
+
+  def transactions_eur(time \\ "hour") do
+    get_from_api "v2/transactions/btceur", %{time: time}
+  end
+
   def ticker do
     get_from_api "ticker"
   end
@@ -131,8 +143,8 @@ defmodule Bitstamp.Api do
     end
   end
 
-  defp get_from_api(path) do
-    Bitstamp.Api.Transport.get(path)
+  defp get_from_api(path, params \\ %{}) do
+    Bitstamp.Api.Transport.get(path, params)
   end
 
   defp post_to_api(method, params \\ %{}) do
